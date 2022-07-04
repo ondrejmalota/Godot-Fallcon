@@ -10,3 +10,7 @@ func _physics_process(delta):
 
 func _on_VisibilityNotifier2D_screen_entered():
 	Utils.Spawn_Wall_Left()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()

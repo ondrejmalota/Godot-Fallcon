@@ -11,6 +11,5 @@ func _physics_process(delta):
 	angular_velocity = ROTATE_SPEED * delta
 
 
-
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
