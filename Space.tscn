@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ShipSprite.tscn" type="PackedScene" id=1]
+[ext_resource path="res://SideStoneLeft.tscn" type="PackedScene" id=2]
+[ext_resource path="res://AsteroidSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://SideStoneRight.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ScoreDetector.tscn" type="PackedScene" id=5]
+[ext_resource path="res://PixelFont.tres" type="DynamicFont" id=6]
+[ext_resource path="res://sound/score.wav" type="AudioStream" id=7]
+[ext_resource path="res://Space.gd" type="Script" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Space" type="Node"]
+script = ExtResource( 9 )
+
+[node name="ShipSprite" parent="." instance=ExtResource( 1 )]
+position = Vector2( 90, 220 )
+
+[node name="AsteroidSpawner" parent="." instance=ExtResource( 3 )]
+
+[node name="SideStoneLeft" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 320 )
+
+[node name="SideStoneRight" parent="." instance=ExtResource( 4 )]
+position = Vector2( 168, 320 )
+
+[node name="ScoreDetector" parent="." instance=ExtResource( 5 )]
+position = Vector2( 90, 210 )
+collision_layer = 0
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchor_right = 1.0
+margin_top = 8.0
+margin_right = 10.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0.5, 14 )
+custom_fonts/font = ExtResource( 6 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+scale = Vector2( 9, 16 )
+z_index = 1
+z_as_relative = false
+shape = SubResource( 1 )
+action = "MOVE"
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+pitch_scale = 0.5
+
+[connection signal="shipDestroyed" from="ShipSprite" to="." method="_on_ShipSprite_shipDestroyed"]
+[connection signal="body_entered" from="ScoreDetector" to="." method="_on_ScoreDetector_body_entered"]
